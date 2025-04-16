@@ -51,7 +51,7 @@ async function user_books(sort) {
 } 
 
 app.get("/", async(req, res)=> {
-  await users_fill() 
+  await users_fill(); 
   res.render("index.ejs", {users: users});
 });
  
@@ -83,18 +83,17 @@ app.post("/user", async(req,res)=> {
     } catch (err) { // book already is in this user books .. already handled in front-end to not happen 
        console.log(err);
     }
-
+  }else if (req.body.name){ // coming from adding a user
     try {
-    const respond = await db.query("insert into users (name, color) values ($1, $2) returning id",[req.body.name, req.body.color]);
-    currentUser = {id: respond.rows[0].id, name: req.body.name, color: req.body.color};
+      let userName = req.body.name.slice(0, 20);
+      const respond = await db.query("insert into users (name, color) values ($1, $2) returning id",[userName, req.body.color]);
+      currentUser = {id: respond.rows[0].id, name: userName, color: req.body.color};
     } catch (err) {
-      if (currentUser) {
-        error = "name already exists";
-      } else {
-        error = "name is too long";        
-      }
+      console.log(err);
+      error = "Name already exists";
+      currentUser = undefined; // to show error
     }
-  } // neither is from /delbook 
+  } 
   res.redirect('/user');
 });
 

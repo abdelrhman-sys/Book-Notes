@@ -86,8 +86,8 @@
         </div>
     </div>
 <% }else if(locals.error) { %>
-    <strong id="error"><em>error: <%= error %>, Try again</em></strong>
-<% }else{ %>
+    <em id="error" class='d-flex justify-content-center p-5'><strong>error: <%= error %>, Try again</strong></em>
+<% }else{ //Home%>
     <div class="container">
         <div class="row">
             <div class="home-txt col-md-6 col-12">

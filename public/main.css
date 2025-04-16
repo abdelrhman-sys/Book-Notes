@@ -1,0 +1,155 @@
+h1, h2, h3, h4 {
+    text-align: center;
+    color: #FF7043;
+}
+#error {
+    color: red;
+}
+body {
+    color: #3E2723;
+    background: linear-gradient(#FFF8E1, #edd070e8);
+}
+.currentUser-p {
+    text-align: center;
+    color: #A1887F;
+    font-size: large;
+}
+.user-name:hover {
+    font-size: x-large;
+}
+/* li of user */
+.user-detail {
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: large;
+    color: rgb(207, 204, 204);
+    box-shadow: 3px 3px 1.5px;
+}
+.user-selected {
+    text-shadow: 1px 1px .5px #FF7043;
+}
+/* ul of all users */
+.all-users { 
+    gap: 5px;
+}
+/* add user page */
+.add-user-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+input {
+    background-color: #FFF8E1;
+    border-radius: 2px;
+    border: 0;
+    border-bottom: 1px solid #FF7043;
+}
+input:focus, textarea:focus, select:focus {
+    outline: 0;
+}
+.welcome {
+    text-align: center;
+    color: #A1887F;
+    font-size: large;
+}
+.home-txt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.search-book-txt, .user-book-detail {
+    width: 68.4%;
+    color: #111827;
+
+}
+.search-book-title, .user-book-title {
+    color: #3f0464;
+}
+.book-added {
+    color: rgb(6, 71, 117);
+}
+.book-no-user {
+    color: #7c0606;
+}
+.book-img {
+    border-radius: 5px;
+    box-shadow: 2px 2px 1px #edb603;
+}
+.user-book { 
+    display: flex;
+}
+.edit-book {
+    display: none;
+}
+.show-edit {
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    width: 60%;
+    height: 75vh;
+    position: fixed;
+    top: 15%;
+    left: 20%;
+    border: 0;
+    background-color:  #FDF6E3    ;
+    box-shadow: 6px 4px 20px 6px #615940;
+    overflow: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #FDF6E3 #FDF6E3;
+    text-align: center;
+}
+textarea {
+    resize: horizontal;
+    background-color: #FFF8E1;
+    border-color: #FF7043;
+    border-width: 1px 0 0 1px;
+    border-radius: 5px;
+    width: 25em;
+    flex-shrink: 1;
+}
+.close-edit {
+    border: 0;
+}
+.book-notes {
+    height: 285px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: black #FFF8E1;
+    scrollbar-gutter: stable both-edges;    
+}
+pre {
+    white-space: pre-wrap;
+}
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+select {
+    background-color: #FFF8E1;
+    border: 0;
+    border-radius: 10px;
+}
+#GitHub {
+    color: grey !important;
+}
+#LinkedIn {
+    color: blue !important;
+}
+@media (width <768px) {
+    .show-edit {
+        height: 60vh;
+    }
+    textarea {
+        width: 11em;
+    }
+    .note-input {
+        flex-direction: column;
+    }
+}

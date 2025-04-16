@@ -1,0 +1,23 @@
+<%- include("partials/header.ejs") %>
+<div style="height: 56px;"></div>
+<div class="container">
+    <div class="row">
+        <form action="/user" method="post" class="add-user-form col-md-6 col-12">
+            <h3>Hey There!</h3>
+            <div class="d-flex justify-content-center flex-wrap gap-1">
+                <label for="name">Enter Your Prefered Name</label>
+                <input type="text" name="name" id="name" autofocus placeholder="Note: max 20 characters">
+            </div>
+            <div>
+                <label for="color">Choose a color for You</label>
+                <input type="color" name="color" id="color" value="#000000">
+            </div>
+            <input type="submit" class="btn btn-success" value="Join">
+        </form>
+        <div class="col-md-6 mt-3">
+            <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDRjdjd3cmJic2ZncDQ3eHRoMjAydTFwbDl5dGh6Z2MyZ3cwMjFmbSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Cmr1OMJ2FN0B2/giphy.webp" alt="Hey gif" width="90%">
+        </div>
+    </div>
+</div>
+
+<%- include("partials/footer.ejs") %>

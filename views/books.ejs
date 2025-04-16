@@ -1,0 +1,32 @@
+<%- include("partials/header.ejs") %>
+<div style="height: 56px;"></div>
+<% if(locals.books){ %>
+    <h2 class="mb-5"><%= numFound %> <% if(numFound === 1){ %>book<% }else{ %>books<% } %> found</h2>
+    <div class="container">
+        <div class="row gap-2">
+            <%books.forEach(book => { %>
+                <div class="col search-book">
+                    <img src="https://covers.openlibrary.org/b/id/<%= book.cover_i %>-M.jpg" alt="<%= book.title %>" class="book-img">
+                    <div class="search-book-txt">
+                        <p class="search-book-title"><i><%= book.title %></i></p>
+                        <p class="search-book-author"><%= book.author_name %></p>
+                        <p class="search-book-date">Published Year: <%= book.first_publish_year %></p>
+                    </div>
+                    <% if(locals.currentUser && !userBooks.find(userBook => userBook.title === book.title)){ // book not added in user books%> 
+                        <form action="/user" method="post">
+                            <input type="hidden" name="addBookId" value=<%= book.cover_i %>>
+                            <input type="hidden" name="addBookTitle" value="<%= book.title %>">
+                            <input type="hidden" name="addBookAuthor" value="<%= book.author_name %>">
+                            <input type="submit" class="btn btn-success" value="+ Add to my books">
+                        </form>
+                    <% }else if(locals.currentUser && userBooks.find(userBook => userBook.title === book.title)) { //book is already added%>
+                        <p class="book-added">Book is already added</p>
+                    <% }else { //no user selected%>
+                        <p class="book-no-user">Choose OR add user to Add this book</p>
+                    <% } %>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+<% } %>
+<%- include("partials/footer.ejs") %>

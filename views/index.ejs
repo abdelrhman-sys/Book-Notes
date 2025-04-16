@@ -1,0 +1,108 @@
+<%- include("partials/header.ejs") %>
+<div style="height: 56px;"></div>
+<% if(locals.currentUser){ %>
+    <h1 class="mb-5"><%= currentUser.name %>'s Books: <%= userBooks.length %></h1>
+    <!-- sort form -->
+    <form action="/user" method="get" class="mb-5 d-flex justify-content-center gap-2">
+        <label for="sort">Sort by 
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
+             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+            </svg>
+        </label>
+        <select name="sort" id="sort">
+            <option value="choose" disabled selected>--choose option--</option>
+            <option value="year">Year of reading</option>
+            <option value="rate">Rate</option>
+        </select>
+        <input type="hidden" name="userId" value="<%= currentUser.id %>">
+        <input type="submit" class="btn btn-success" value="Sort">
+    </form>
+    <!-- showing user books -->
+    <div class="container">
+        <div class="row">
+            <% userBooks.forEach(book => { %>
+                <div class="col-12 col-md-6 user-book mb-3 d-flex">
+                    <div class="book-details">
+                        <img src="https://covers.openlibrary.org/b/id/<%= book.id %>-M.jpg" alt="<%= book.title %>" class="book-img">
+                        <div class="user-book-detail">
+                            <p class="user-book-title"><i><%= book.title %></i></p>
+                            <p class="user-rate"><% book.rate %></p>
+                        </div>
+                        <!-- edit box to add notes -->
+                        <div class="book-btns d-flex gap-4">
+                            <button onclick="edit(this)" class="edit-btn btn btn-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                </svg>
+                            </button>
+                            <div class="edit-book py-2">
+                                <button class="close-edit btn btn-secondary" onclick="closes(this)" style="align-self: flex-end;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                                    </svg>
+                                </button>
+                                <h4><i><%= book.title %></i></h4>
+                                <div class="d-flex justify-content-center">
+                                    <hr class="hr-edit" style="width: 60%;"/>
+                                </div>
+                                <form action="/bookNote" method="post" class="edit-form">
+                                    <div>
+                                        <label for="year">Year of Reading:</label>
+                                        <input type="number" name="year" id="year" placeholder="2019" value="<%= book.year %>" required>
+                                    </div>
+                                    <div>
+                                        <label for="rate">Your Rate:</label>
+                                        <input type="number" name="rate" id="rate" placeholder="8.5" value="<%= book.rate %>" required>
+                                        <span>/10</span>
+                                    </div>
+                                    <div class="d-flex note-input gap-1">
+                                        <label for="note">Your Notes:</label>
+                                        <textarea name="note" id="note" rows="11" placeholder="1.First note 2.Second note" autofocus autocomplete="off"><%= book.note %></textarea>
+                                    </div>
+                                    <input type="hidden" name="idUser" value="<%= currentUser.id %>">
+                                    <input type="hidden" name="nameUser" value="<%= currentUser.name %>">
+                                    <input type="hidden" name="colorUser" value="<%= currentUser.color %>">
+                                    <input type="hidden" name="currentBook" value="<%= book.id %>">
+                                    <input type="submit" value="Save" class="btn btn-success">
+                                </form>
+                            </div>
+                            <form action="/delbook" method="post">
+                                <button type="submit" name="deleteBook" value="<%= book.id %>" class="delete-btn btn btn-danger">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                    </svg>
+                                </button>
+                                <input type="hidden" name="userId" value="<%= currentUser.id %>">
+                                <input type="hidden" name="userName" value="<%= currentUser.name %>">
+                                <input type="hidden" name="userColor" value="<%= currentUser.color %>">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="book-notes ms-4">
+                        <pre class="user-note"><%= book.note %></pre>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+<% }else if(locals.error) { %>
+    <strong id="error"><em>error: <%= error %>, Try again</em></strong>
+<% }else{ %>
+    <div class="container">
+        <div class="row">
+            <div class="home-txt col-md-6 col-12">
+                <h1>Take notes of Your favourite book</h1>
+                <strong class="welcome mt-3">Join as a user to add books and take notes of them,<br>Go to Dashboard
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                    </svg>
+                   to start.
+                </strong>
+            </div>
+            <div class="col-md-6 mt-3">
+                <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGxoZ3IyMW5wcHdxcGd4NzBnbno3NGU0eHl2MnhrNzY1b2JiZWR5bSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/ztx5OISHSwlmLvSetd/giphy.webp" alt="noted gif" width="90%">
+            </div>
+        </div>
+    </div>
+<% } %>
+<%- include("partials/footer.ejs") %>

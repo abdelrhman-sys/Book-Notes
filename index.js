@@ -143,7 +143,7 @@ app.post("/delUser",async (req, res)=> {
 
 app.post("/delBook", async(req, res)=> {
   await db.query(`delete from users_books
-                where book_id = $1 and user_id = $2`, [req.body.deleteBook, req.body.userId]);
+                where book_id = $1 and user_id = $2`, [req.body.deleteBook, currentUser.id]);
   res.redirect("/user");
 });
 app.listen(port, ()=> {

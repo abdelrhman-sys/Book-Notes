@@ -64,7 +64,7 @@ app.post("/bookNote", async(req, res)=> {
                     set rate =$1,
                     year =$2,
                     note = $3
-                    where user_id =$4 and book_id =$5`, [req.body.rate, req.body.year, req.body.note, parseInt(req.body.idUser), parseInt(req.body.currentBook)]);
+                    where user_id =$4 and book_id =$5`, [req.body.rate, req.body.year, req.body.note, currentUser.id, parseInt(req.body.currentBook)]);
   } catch (err) {
     console.log(err);
   }

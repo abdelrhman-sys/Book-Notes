@@ -105,7 +105,7 @@ textarea {
     resize: horizontal;
     background-color: #FFF8E1;
     border-color: #FF7043;
-    border-width: 1px 0 0 1px;
+    border-width: 1px;
     border-radius: 5px;
     width: 25em;
     flex-shrink: 1;
@@ -118,7 +118,7 @@ textarea {
     overflow-y: scroll;
     scrollbar-width: thin;
     scrollbar-color: black #FFF8E1;
-    scrollbar-gutter: stable both-edges;    
+    border: 3px dotted white;
 }
 pre {
     white-space: pre-wrap;
@@ -149,5 +149,8 @@ select {
     }
     .note-input {
         flex-direction: column;
+    }
+    input[type="number"] {
+        width: 30%;
     }
 }

@@ -10,7 +10,7 @@
                     <div class="search-book-txt">
                         <p class="search-book-title"><i><%= book.title %></i></p>
                         <p class="search-book-author"><%= book.author_name %></p>
-                        <p class="search-book-date">Published Year: <%= book.first_publish_year %></p>
+                        <p class="search-book-date">Published Year: <%= book.first_publish_year || "N/A" %></p>
                     </div>
                     <% if(locals.currentUser && !userBooks.find(userBook => userBook.title === book.title)){ // book not added in user books%> 
                         <form action="/user" method="post">
